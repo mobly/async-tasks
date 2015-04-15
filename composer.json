@@ -1,0 +1,29 @@
+{
+    "name" : "mobly/async-tasks",
+    "description": "Async Tasks",
+    "keywords": [
+        "async",
+        "tasks",
+        "mobly"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4",
+        "qxsch/worker-pool": "1.4.*",
+        "doctrine/collections": "1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mobly\\Async\\" : "src/",
+            "Mobly\\Async\\Test\\" : "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "stable"
+}
