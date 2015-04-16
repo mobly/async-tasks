@@ -18,6 +18,11 @@ use QXS\WorkerPool\ClosureWorker;
 class Dispatcher
 {
     /**
+     * @var string
+     */
+    const INTERNAL_ERROR = 'Internal Error';
+
+    /**
      * @var ProcessCollection
      */
     protected $processCollection;
@@ -78,7 +83,19 @@ class Dispatcher
         $resultCollection = new ResultCollection();
 
         foreach ($pool as $result) {
-            $resultCollection->add($result['data']);
+            $resultEntity = new Result();
+
+            if (!empty($result['data'])) {
+                $resultEntity = $result['data'];
+            } elseif (!empty($result['workerException']['message'])) {
+                $resultEntity->setErrorMessage($result['workerException']['message']);
+            } elseif (!empty($result['poolException']['message'])) {
+                $resultEntity->setErrorMessage($result['poolException']['message']);
+            } else {
+                $resultEntity->setErrorMessage(self::INTERNAL_ERROR);
+            }
+
+            $resultCollection->add($resultEntity);
         }
         
         return $resultCollection;
